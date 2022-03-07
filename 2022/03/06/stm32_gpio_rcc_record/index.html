@@ -6,17 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://freshwinder.github.io">
-  <title>Archives | Winder blog</title>
+  <title>1.STM32 GPIO and RCC principle learning record | Winder blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="RTOS、MCU">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Winder blog">
-<meta property="og:url" content="https://freshwinder.github.io/archives/index.html">
+  <meta name="description" content="This is my first blog, and I will keep writting it. This blog records GPIO and RCC related notes. GPIO12345678910111213typedef struct&amp;#123;  __IO uint32_t MODER;    &#x2F;*!&lt; GPIO port mode register,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1.STM32 GPIO and RCC principle learning record">
+<meta property="og:url" content="https://freshwinder.github.io/2022/03/06/stm32_gpio_rcc_record/index.html">
 <meta property="og:site_name" content="Winder blog">
-<meta property="og:description" content="RTOS、MCU">
+<meta property="og:description" content="This is my first blog, and I will keep writting it. This blog records GPIO and RCC related notes. GPIO12345678910111213typedef struct&amp;#123;  __IO uint32_t MODER;    &#x2F;*!&lt; GPIO port mode register,">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:/Users/dane/Desktop/2.RCC.textbundle/assets/37e6bd6fdc0a3e6682f61c7096db99e87a2a78b7606d8a0757af261fc2c308cd.png">
+<meta property="og:image" content="c:/Users/dane/Desktop/2.RCC.textbundle/assets/cca41744e7ede13650a8ac947586e852507d14c76750b4c7a5114fcd89a8c144.png">
+<meta property="og:image" content="c:/Users/dane/Desktop/2.RCC.textbundle/assets/a5c0b19230e2ce4c90f8bbe5071b9e376a25281a8a7beaa881d5051aac3c45f9.png">
+<meta property="article:published_time" content="2022-03-06T13:07:15.000Z">
+<meta property="article:modified_time" content="2022-03-07T14:53:35.400Z">
 <meta property="article:author" content="Winder">
+<meta property="article:tag" content="STM32">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/dane/Desktop/2.RCC.textbundle/assets/37e6bd6fdc0a3e6682f61c7096db99e87a2a78b7606d8a0757af261fc2c308cd.png">
   
     <link rel="alternative" href="/atom.xml" title="Winder blog" type="application/atom+xml">
   
@@ -138,36 +145,407 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-stm32_gpio_rcc_record" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/03/06/stm32_gpio_rcc_record/" class="archive-article-date">
-  	<time datetime="2022-03-06T13:07:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/03/06/stm32_gpio_rcc_record/">1.STM32 GPIO and RCC principle learning record</a>
+    <h1 class="article-title" itemprop="name">
+      1.STM32 GPIO and RCC principle learning record
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2022/03/06/stm32_gpio_rcc_record/" class="archive-article-date">
+  	<time datetime="2022-03-06T13:07:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>This is my first blog, and I will keep writting it.</p>
+<p>This blog records GPIO and RCC related notes.</p>
+<h2 id="GPIO"><a href="#GPIO" class="headerlink" title="GPIO"></a>GPIO</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> MODER;    <span class="comment">/*!&lt; GPIO port mode register,               Address offset: 0x00      */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> OTYPER;   <span class="comment">/*!&lt; GPIO port output type register,        Address offset: 0x04      */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> OSPEEDR;  <span class="comment">/*!&lt; GPIO port output speed register,       Address offset: 0x08      */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> PUPDR;    <span class="comment">/*!&lt; GPIO port pull-up/pull-down register,  Address offset: 0x0C      */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> IDR;      <span class="comment">/*!&lt; GPIO port input data register,         Address offset: 0x10      */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> ODR;      <span class="comment">/*!&lt; GPIO port output data register,        Address offset: 0x14      */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> BSRRL;    <span class="comment">/*!&lt; GPIO port bit set/reset low register,  Address offset: 0x18      */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> BSRRH;    <span class="comment">/*!&lt; GPIO port bit set/reset high register, Address offset: 0x1A      */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> LCKR;     <span class="comment">/*!&lt; GPIO port configuration lock register, Address offset: 0x1C      */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> AFR[<span class="number">2</span>];   <span class="comment">/*!&lt; GPIO alternate function registers,     Address offset: 0x20-0x24 */</span></span><br><span class="line">&#125; GPIO_TypeDef;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-GPIO-TypeDef"><a href="#1-GPIO-TypeDef" class="headerlink" title="1.GPIO_TypeDef"></a>1.GPIO_TypeDef</h2><h3 id="uint32-t-MODER"><a href="#uint32-t-MODER" class="headerlink" title="uint32_t MODER"></a>uint32_t MODER</h3><ul>
+<li><p>模式寄存器</p>
+<ul>
+<li>00:输入(复位状态)</li>
+<li>01:通用输出模式</li>
+<li>10:复用功能模式</li>
+<li>11:模拟模式</li>
+</ul>
+</li>
+</ul>
+<h3 id="uint32-t-OTYPER"><a href="#uint32-t-OTYPER" class="headerlink" title="uint32_t OTYPER"></a>uint32_t OTYPER</h3><ul>
+<li><p>输出类型寄存器<br>只用到低16位</p>
+<ul>
+<li>0:输出推挽</li>
+<li>1:输出开漏</li>
+</ul>
+</li>
+</ul>
+<h3 id="uint32-t-OSPEEDR"><a href="#uint32-t-OSPEEDR" class="headerlink" title="uint32_t OSPEEDR"></a>uint32_t OSPEEDR</h3><ul>
+<li><p>输出速度寄存器</p>
+<ul>
+<li>00：2MHz</li>
+<li>01：25</li>
+<li>10：50</li>
+<li>11：100</li>
+</ul>
+</li>
+</ul>
+<h3 id="uint32-t-PUPDR"><a href="#uint32-t-PUPDR" class="headerlink" title="uint32_t PUPDR"></a>uint32_t PUPDR</h3><ul>
+<li><p>上拉下拉寄存器</p>
+<ul>
+<li>00：无上下拉</li>
+<li>01：上拉</li>
+<li>10：下拉</li>
+<li>11：保留</li>
+</ul>
+</li>
+</ul>
+<h3 id="uint32-t-IDR"><a href="#uint32-t-IDR" class="headerlink" title="uint32_t IDR"></a>uint32_t IDR</h3><ul>
+<li>输入数据寄存器<br>用到低16bit<br>高16bit必须保持复位值</li>
+</ul>
+<h3 id="uint32-t-ODR"><a href="#uint32-t-ODR" class="headerlink" title="uint32_t ODR"></a>uint32_t ODR</h3><ul>
+<li>输出数据寄存器<br>同上</li>
+</ul>
+<h3 id="uint16-t-RSRRL"><a href="#uint16-t-RSRRL" class="headerlink" title="uint16_t RSRRL"></a>uint16_t RSRRL</h3><ul>
+<li>0：不会对相应的ODRx位进行任何操作</li>
+<li>1：对相应的ODRx位进行复位</li>
+</ul>
+<h3 id="uint16-t-BSRRH"><a href="#uint16-t-BSRRH" class="headerlink" title="uint16_t BSRRH"></a>uint16_t BSRRH</h3><ul>
+<li>0：不会对相应的ODRx位进行任何操作</li>
+<li>1：对相应的ODRx位进行置位</li>
+</ul>
+<h3 id="uint32-t-LCKR"><a href="#uint32-t-LCKR" class="headerlink" title="uint32_t LCKR"></a>uint32_t LCKR</h3><ul>
+<li><p>配置锁存寄存器</p>
+<ul>
+<li>当正确的写序列应用到第 16 位 (LCKK) 时，此寄存器将用于锁定端口位的配置。位 [15:0] 的<br>值用于锁定 GPIO 的配置。在写序列期间，不能更改 LCKR[15:0] 的值。将 LOCK 序列应用<br>到某个端口位后，在执行下一次复位之前，将无法对该端口位的值进行修改。</li>
+</ul>
+</li>
+</ul>
+<h3 id="uint32-t-AFR-2"><a href="#uint32-t-AFR-2" class="headerlink" title="uint32_t AFR[2]"></a>uint32_t AFR[2]</h3><ul>
+<li>两个复位功能寄存器</li>
+</ul>
+<h2 id="RCC"><a href="#RCC" class="headerlink" title="RCC"></a>RCC</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> CR;            <span class="comment">/*!&lt; RCC clock control register,                                  Address offset: 0x00 */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> PLLCFGR;       <span class="comment">/*!&lt; RCC PLL configuration register,                              Address offset: 0x04 */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> CFGR;          <span class="comment">/*!&lt; RCC clock configuration register,                            Address offset: 0x08 */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> CIR;           <span class="comment">/*!&lt; RCC clock interrupt register,                                Address offset: 0x0C */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> AHB1RSTR;      <span class="comment">/*!&lt; RCC AHB1 peripheral reset register,                          Address offset: 0x10 */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> AHB2RSTR;      <span class="comment">/*!&lt; RCC AHB2 peripheral reset register,                          Address offset: 0x14 */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> AHB3RSTR;      <span class="comment">/*!&lt; RCC AHB3 peripheral reset register,                          Address offset: 0x18 */</span></span><br><span class="line">  <span class="type">uint32_t</span>      RESERVED0;     <span class="comment">/*!&lt; Reserved, 0x1C                                                                    */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> APB1RSTR;      <span class="comment">/*!&lt; RCC APB1 peripheral reset register,                          Address offset: 0x20 */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> APB2RSTR;      <span class="comment">/*!&lt; RCC APB2 peripheral reset register,                          Address offset: 0x24 */</span></span><br><span class="line">  <span class="type">uint32_t</span>      RESERVED1[<span class="number">2</span>];  <span class="comment">/*!&lt; Reserved, 0x28-0x2C                                                               */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> AHB1ENR;       <span class="comment">/*!&lt; RCC AHB1 peripheral clock register,                          Address offset: 0x30 */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> AHB2ENR;       <span class="comment">/*!&lt; RCC AHB2 peripheral clock register,                          Address offset: 0x34 */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> AHB3ENR;       <span class="comment">/*!&lt; RCC AHB3 peripheral clock register,                          Address offset: 0x38 */</span></span><br><span class="line">  <span class="type">uint32_t</span>      RESERVED2;     <span class="comment">/*!&lt; Reserved, 0x3C                                                                    */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> APB1ENR;       <span class="comment">/*!&lt; RCC APB1 peripheral clock enable register,                   Address offset: 0x40 */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> APB2ENR;       <span class="comment">/*!&lt; RCC APB2 peripheral clock enable register,                   Address offset: 0x44 */</span></span><br><span class="line">  <span class="type">uint32_t</span>      RESERVED3[<span class="number">2</span>];  <span class="comment">/*!&lt; Reserved, 0x48-0x4C                                                               */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> AHB1LPENR;     <span class="comment">/*!&lt; RCC AHB1 peripheral clock enable in low power mode register, Address offset: 0x50 */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> AHB2LPENR;     <span class="comment">/*!&lt; RCC AHB2 peripheral clock enable in low power mode register, Address offset: 0x54 */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> AHB3LPENR;     <span class="comment">/*!&lt; RCC AHB3 peripheral clock enable in low power mode register, Address offset: 0x58 */</span></span><br><span class="line">  <span class="type">uint32_t</span>      RESERVED4;     <span class="comment">/*!&lt; Reserved, 0x5C                                                                    */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> APB1LPENR;     <span class="comment">/*!&lt; RCC APB1 peripheral clock enable in low power mode register, Address offset: 0x60 */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> APB2LPENR;     <span class="comment">/*!&lt; RCC APB2 peripheral clock enable in low power mode register, Address offset: 0x64 */</span></span><br><span class="line">  <span class="type">uint32_t</span>      RESERVED5[<span class="number">2</span>];  <span class="comment">/*!&lt; Reserved, 0x68-0x6C                                                               */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> BDCR;          <span class="comment">/*!&lt; RCC Backup domain control register,                          Address offset: 0x70 */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> CSR;           <span class="comment">/*!&lt; RCC clock control &amp; status register,                         Address offset: 0x74 */</span></span><br><span class="line">  <span class="type">uint32_t</span>      RESERVED6[<span class="number">2</span>];  <span class="comment">/*!&lt; Reserved, 0x78-0x7C                                                               */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> SSCGR;         <span class="comment">/*!&lt; RCC spread spectrum clock generation register,               Address offset: 0x80 */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> PLLI2SCFGR;    <span class="comment">/*!&lt; RCC PLLI2S configuration register,                           Address offset: 0x84 */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> PLLSAICFGR;    <span class="comment">/*!&lt; RCC PLLSAI configuration register,                           Address offset: 0x88 */</span></span><br><span class="line">  __IO <span class="type">uint32_t</span> DCKCFGR;       <span class="comment">/*!&lt; RCC Dedicated Clocks configuration register,                 Address offset: 0x8C */</span></span><br><span class="line"></span><br><span class="line">&#125; RCC_TypeDef;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-RCC"><a href="#2-RCC" class="headerlink" title="2.RCC"></a>2.RCC</h1><h2 id="复位"><a href="#复位" class="headerlink" title="复位"></a>复位</h2><h3 id="系统复位"><a href="#系统复位" class="headerlink" title="系统复位"></a>系统复位</h3><p>除了时钟控制寄存器 CSR 中的复位标志和备份域中的寄存器外，系统复位会将其它全部寄存器都复位为复位值</p>
+<ul>
+<li><p>1.NRST引脚低电平复位</p>
+</li>
+<li><p>2.窗口看门狗计数结束WWDG</p>
+</li>
+<li><p>3.独立看门狗计数复位IWDG</p>
+</li>
+<li><p>4.软件复位</p>
+<p>可通过查看 RCC 时钟控制和状态寄存器 (RCC_CSR) 中的复位标志确定。<br>要对器件进行软件复位，必须将 Cortex™-M4F 应用中断和复位控制寄存器中的<br>SYSRESETREQ 位置 1。有关详细信息，请参见 Cortex™-M4F 技术参考手册。 </p>
+</li>
+<li><p>5.低功耗管理复位</p>
+<p>引发低功耗管理复位的方式有两种：</p>
+<ol>
+<li>进入待机模式时产生复位：<br>此复位的使能方式是清零用户选项字节中的 nRST_STDBY 位。使能后，只要成功执行<br>进入待机模式序列，器件就将复位，而非进入待机模式。</li>
+<li>进入停止模式时产生复位：<br>此复位的使能方式是清零用户选项字节中的 nRST_STOP 位。使能后，只要成功执行<br>进入停止模式序列，器件就将复位，而非进入停止模式。<br>有关用户选项字节的详细信息，请参见 STM32F40x 和 STM32F41x Flash 编程手册，该手<br>册可从 ST 销售办事处获取，也可以从 ST 网站 <a target="_blank" rel="noopener" href="http://www.st.com/">www.st.com</a> 获得文档信息。</li>
+</ol>
+</li>
+</ul>
+<h3 id="电源复位"><a href="#电源复位" class="headerlink" title="电源复位"></a>电源复位</h3><ul>
+<li>1.上电&#x2F;掉电复位（POR&#x2F;PDR复位）或欠压(BOR)复位</li>
+<li>2.退出待机模式时</li>
+</ul>
+<h3 id="备份域复位"><a href="#备份域复位" class="headerlink" title="备份域复位"></a>备份域复位</h3><p>备份域复位会将所有 RTC 寄存器和 RCC_BDCR 寄存器复位为各自的复位值。 BKPSRAM 不受<br>此复位影响。 BKPSRAM 的唯一复位方式是通过 Flash 接口将 Flash 保护等级从 1 切换到 0。 </p>
+<ul>
+<li><ol>
+<li>软件复位，通过将 RCC 备份域控制寄存器 (RCC_BDCR) 中的 BDRST 位置 1 触发</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>在电源 VDD 和 VBAT 都已掉电后，其中任何一个又再上电。</li>
+</ol>
+</li>
+</ul>
+<h2 id="时钟"><a href="#时钟" class="headerlink" title="时钟"></a>时钟</h2><h3 id="内部时钟"><a href="#内部时钟" class="headerlink" title="内部时钟"></a>内部时钟</h3><ul>
+<li><p>LSI</p>
+<p>该 RC 用于驱动独立看门狗，也可选择提供给 RTC 用<br>于停机&#x2F;待机模式下的自动唤醒。 </p>
+</li>
+<li><p>LSE</p>
+<p>32.768 kHz 低速外部晶振（ LSE 晶振），用于驱动 RTC 时钟 (RTCCLK)<br>对于每个时钟源来说，在未使用时都可单独打开或者关闭，以降低功耗。 </p>
+</li>
+<li><p>HSI</p>
+<p>HSI 是高速内部时钟， RC 振荡器， 频率为 16MHz。 可以直接作为系统时钟或者用作 PLL输入。</p>
+</li>
+<li><p>HSE</p>
+<p>HSE 是高速外部时钟，可接石英&#x2F;陶瓷谐振器，或者接外部时钟源，频率范围为 4MHz~26MHz。<br>我们的开发板接的是 8M 的晶振。 HSE 也可以直接做为系统时钟或者 PLL 输入。</p>
+</li>
+<li><p>PLL</p>
+<ul>
+<li><p>主PLL</p>
+<p>第一个输出用于生成高速系统时钟（最高达 168 MHz）<br>第二个输出用于生成 USB OTG FS 的时钟 (48 MHz)、随机数发生器的时钟 <br>(48 MHz) 和 SDIO 时钟 ( 48 MHz)。 | — </p>
+</li>
+<li><p>专用PLL</p>
+<p>专用 PLL (PLLI2S) 用于生成精确时钟，从而在 I2S 接口实现高品质音频性能</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="时钟输出功能"><a href="#时钟输出功能" class="headerlink" title="时钟输出功能"></a>时钟输出功能</h3><ul>
+<li><p>MCO1</p>
+<p>用户可通过可配置的预分配器（从 1 到 5）向 MCO1 引脚 (PA8) 输出四个不同的时钟源：<br>— HSI 时钟<br>— LSE 时钟<br>— HSE 时钟<br>— PLL 时钟<br>所需的时钟源通过 RCC 时钟配置寄存器 (RCC_CFGR) 中的 MCO1PRE[2:0] 和 MCO1[1:0]<br>位选择。 </p>
+</li>
+<li><p>MCO2</p>
+<p>用户可通过可配置的预分配器（从 1 到 5）向 MCO2 引脚 (PC9) 输出四个不同的时钟源：<br>— HSE 时钟<br>— PLL 时钟<br>— 系统时钟 (SYSCLK)<br>— PLLI2S 时钟<br>所需的时钟源通过 RCC 时钟配置寄存器 (RCC_CFGR) 中的 MCO2PRE[2:0] 和 MCO2<br>位选择。</p>
+</li>
+</ul>
+<h3 id="基于-TIM5-x2F-TIM11-的内部-x2F-外部时钟测量"><a href="#基于-TIM5-x2F-TIM11-的内部-x2F-外部时钟测量" class="headerlink" title="基于 TIM5&#x2F;TIM11 的内部&#x2F;外部时钟测量"></a>基于 TIM5&#x2F;TIM11 的内部&#x2F;外部时钟测量</h3><ul>
+<li><p>TIM5</p>
+<p>基于 TIM5 channel4 的内部&#x2F;外部时钟测量<br>TIM5 具有一个输入复用器，可选择输入捕获是由 I&#x2F;O 触发还是由内部时钟触发。此选择通过<br>TIM5_OR 寄存器的 TI4_RMP [1:0] 位执行。<br>将 LSE 连接到 channel4 输入捕获的主要目的是为了精确测量 HSI（这需要将 HSI 用作系统<br>时钟源）。借助 LSE 信号连续边沿之间的 HSI 时钟计数数量，即可对内部时钟周期进行测<br>量。利用 LSE 的高精度（通常为几十 ppm），用户能以同一分辨率测定时钟频率，并可通<br>过对时钟源进行微调来补偿由生产工艺造成的和&#x2F;或与温度和电压相关的频率偏差。<br>HSI 振荡器设有针对此目的的专用校准位，且支持用户访问。<br>其基本原理是基于相对的测量（例如， HSI&#x2F;LSE 比）：因此，精度与两个时钟源之比紧密相<br>关。比率越大，测量效果越好。<br>同时也可测量 LSI 频率：这对于没有晶振的应用场合非常实用。超低功耗 LSI 振荡器具有较<br>大的生产工艺偏差：通过测量该振荡器与 HSI 时钟源的比率，可以借助 HSI 精度为其测定频<br>率。可通过此测量值实现更加精确的 RTC 时基超时（当使用 LSI 作为 RTC 时钟源时）和&#x2F;或<br>实现精度水平可以接受的 IWDG 超时。<br>LSI 频率通过以下步骤测量：</p>
+<ol>
+<li>使能 TIM5 定时器并将 channel4 配置为输入捕获模式。</li>
+<li>将 TIM5_OR 寄存器中的 TI4_RMP 位设置为 0x01，以在内部将 LSI 时钟连接到 TIM5<br>channel4 输入捕获来实现校准。</li>
+<li>通过 TIM5 捕获&#x2F;比较 4 事件或中断测量 LSI 时钟频率。</li>
+<li>使用测得的 LSI 频率来按照所需的时基更新 RTC 的预分频器，并且&#x2F;或者用其来计算<br>IWDG 超时。</li>
+</ol>
+</li>
+<li><p>TIM11</p>
+<p>TIM11 具有一个输入复用器，可选择输入捕获是由 I&#x2F;O 触发还是由内部时钟触发。此选择通<br>过 TIM11_OR 寄存器的 TI1_RMP [1:0] 位执行。 HSE_RTC 时钟（由一个可编程预分频器分<br>频的 HSE）连接到通道 1 输入捕获，以粗略指示外部晶振频率。这要求 HSI 为系统时钟<br>源。此功能非常实用，例如可借此测定谐波频率或分谐波频率（ —50&#x2F;+100% 偏差），进而确<br>保符合 IEC 60730&#x2F;IEC 61335 标准 。</p>
+</li>
+</ul>
+<h2 id="RCC寄存器"><a href="#RCC寄存器" class="headerlink" title="RCC寄存器"></a>RCC寄存器</h2><h3 id="uint32-t"><a href="#uint32-t" class="headerlink" title="uint32_t"></a>uint32_t</h3><ul>
+<li><p>CR</p>
+<ul>
+<li><p>RCC clock control register</p>
+<ul>
+<li><p>PLLI2SRDY</p>
+<p>位 27 PLLI2SRDY： PLLI2S 时钟就绪标志 (PLLI2S clock ready flag)<br>由硬件置 1，用以指示 PLLI2S 已锁定。<br>0： PLLI2S 未锁定<br>1： PLLI2S 已锁定 </p>
+</li>
+<li><p>PLLI2SON</p>
+<p>位 26 PLLI2SON： PLLI2S 使能 (PLLI2S enable)<br>由软件置 1 和清零，用于使能 PLLI2S。<br>当进入停机或待机模式时由硬件清零。<br>0： PLLI2S 关闭<br>1： PLLI2S 开启 </p>
+</li>
+<li><p>PLLRDY</p>
+<p>位 25 PLLRDY：主 PLL (PLL) 时钟就绪标志 (Main PLL (PLL) clock ready flag)<br>由硬件置 1，用以指示 PLL 已锁定。<br>0： PLL 未锁定<br>1： PLL 已锁定 </p>
+</li>
+<li><p>PLLON</p>
+<p>位 24 PLLON：主 PLL (PLL) 使能 (Main PLL (PLL) enable)<br>由软件置 1 和清零，用于使能 PLL。<br>当进入停机或待机模式时由硬件清零。如果 PLL 时钟用作系统时钟，则此位不可清零。<br>0： PLL 关闭<br>1： PLL 开启 </p>
+</li>
+<li><p>CSSON</p>
+<p>位 19 CSSON：时钟安全系统使能 (Clock security system enable)<br>由软件置 1 和清零，用于使能时钟安全系统。当 CSSON 置位时，时钟监测器将在 HSE 振<br>荡器就绪时由硬件使能，并在检出振荡器故障时由硬件禁止。<br>0：时钟安全系统关闭（时钟监测器关闭）<br>1：时钟安全系统打开（如果 HSE 振荡器稳定，则时钟监测器打开；如果不稳定，则关闭） </p>
+</li>
+<li><p>HSEBYP</p>
+<p>位 18 HSEBYP： HSE 时钟旁路 (HSE clock bypass)<br>由软件置 1 和清零，用于用外部时钟旁路振荡器。外部时钟必须通过 HSEON 位使能才能为<br>器件使用。<br>HSEBYP 只有在 HSE 振荡器已禁止的情况下才可写入。<br>0：不旁路 HSE 振荡器<br>1：外部时钟旁路 HSE 振荡器 </p>
+</li>
+<li><p>HSERDY</p>
+<p>位 17 HSERDY： HSE 时钟就绪标志 (HSE clock ready flag)<br>由硬件置 1，用以指示 HSE 振荡器已稳定。在将 HSEON 位清零后， HSERDY 将在 6 个<br>HSE 振荡器时钟周期后转为低电平。<br>0： HSE 振荡器未就绪<br>1： HSE 振荡器已就绪 </p>
+</li>
+<li><p>HSEON</p>
+<p>位 16 HSEON： HSE 时钟使能 (HSE clock enable)<br>由软件置 1 和清零。<br>由硬件清零，用于在进入停机或待机模式时停止 HSE 振荡器。如果 HSE 振荡器直接或间接<br>用于作为系统时钟，则此位不可复位。<br>0： HSE 振荡器关闭<br>1： HSE 振荡器打开 </p>
+</li>
+<li><p>HSICAL</p>
+<p>位 15:8 HSICAL[7:0]：内部高速时钟校准 (Internal high-speed clock calibration)<br>这些位在启动时自动初始化。 </p>
+</li>
+<li><p>HSITRIM</p>
+<p>位 7:3 HSITRIM[4:0]：内部高速时钟微调 (Internal high-speed clock trimming)<br>通过这些位，可在 HSICAL[7:0] 位基础上实现可由用户编程的微调值。可通过编程使其适应<br>电压和温度的差异，使内部 HSI RC 的频率更为准确。 </p>
+</li>
+<li><p>HSIRDY</p>
+<p>位 1 HSIRDY：内部高速时钟就绪标志 (Internal high-speed clock ready flag)<br>由硬件置 1，用以指示 HSI 振荡器已稳定。在将 HSION 位清零后， HSIRDY 将在 6 个 HSI<br>时钟周期后转为低电平。<br>0： HSI 振荡器未就绪<br>1： HSI 振荡器已就绪 </p>
+</li>
+<li><p>HSION</p>
+<p>位 0 HSION：内部高速时钟使能 (Internal high-speed clock enable)<br>由软件置 1 和清零。<br>由硬件置 1，用于在脱离停机或待机模式时或者在直接或间接用作系统时钟的 HSE 振荡器发<br>生故障时强制 HSI 振荡器打开。如果 HSI 直接或间接用于作为系统时钟，则此位不可清零。<br>0： HSI 振荡器关闭<br>1： HSI 振荡器打开</p>
+</li>
+</ul>
+</li>
+<li><p><img src="C:/Users/dane/Desktop/2.RCC.textbundle/assets/37e6bd6fdc0a3e6682f61c7096db99e87a2a78b7606d8a0757af261fc2c308cd.png"></p>
+</li>
+</ul>
+</li>
+<li><p>PLLCFGR</p>
+<ul>
+<li><p>RCC PLL configuration register</p>
+<p>此寄存器用于根据公式配置 PLL 时钟输出：<br>● f(VCO 时钟) &#x3D; f(PLL 时钟输入) × (PLLN &#x2F; PLLM)<br>● f(PLL 常规时钟输出) &#x3D; f(VCO 时钟) &#x2F; PLLP<br>● f(USB OTG FS, SDIO, RNG 时钟输出) &#x3D; f(VCO 时钟) &#x2F; PLLQ </p>
+<ul>
+<li><p>PLLQ</p>
+<p>位 27:24 PLLQ： 主 PLL (PLL) 分频系数，适用于 USB OTG FS、 SDIO 和随机数发生器时钟 (Main<br>PLL (PLL) division factor for USB OTG FS, SDIO and random number generator clocks)<br>由软件置 1 或清零，用于控制 USB OTG FS 时钟、随机数发生器时钟和 SDIO 时钟的频<br>率。这些位应仅在 PLL 已禁止时写入。<br>小心：  | 为使 USB OTG FS 能够正常工作，需要 48 MHz 的时钟。对于 SDIO 和随即数生成<br>器，频率需要低于或等于 48 MHz 才可正常工作。USB OTG FS 时钟频率 &#x3D; VCO 频率 &#x2F; PLLQ，并且 2 PLLQ 15<br>0000： PLLQ &#x3D; 0，错误配置<br>0001： PLLQ &#x3D; 1，错误配置<br>0010： PLLQ &#x3D; 2<br>0011： PLLQ &#x3D; 3<br>0100： PLLQ &#x3D; 4<br>…<br>1111： PLLQ &#x3D; 15 </p>
+</li>
+<li><p>PLLSRC</p>
+<p>位 22 PLLSRC： 主 PLL(PLL) 和音频 PLL (PLLI2S) 输入时钟源 (Main PLL(PLL) and audio PLL<br>(PLLI2S) entry clock source)<br>由软件置 1 和清零，用于选择 PLL 和 PLLI2S 时钟源。此位只有在 PLL 和 PLLI2S 已禁止时<br>才可写入。<br>0：选择 HSI 时钟作为 PLL 和 PLLI2S 时钟输入<br>1：选择 HSE 振荡器时钟作为 PLL 和 PLLI2S 时钟输入 </p>
+</li>
+<li><p>PLLP</p>
+<p>位 17:16 PLLP： 适用于主系统时钟的主 PLL (PLL) 分频系数 (Main PLL (PLL) division factor for main<br>system clock)<br>由软件置 1 和清零，用于控制常规 PLL 输出时钟的频率。这些位只能在 PLL 已禁止时写入。<br>小心： 软件必须正确设置这些位，使其在此域中不超过 168 MHz。<br>PLL 输出时钟频率 &#x3D; VCO 频率 &#x2F; PLLP 并且 PLLP &#x3D; 2、 4、 6 或 8<br>00： PLLP &#x3D; 2<br>01： PLLP &#x3D; 4<br>10： PLLP &#x3D; 6<br>11： PLLP &#x3D; 8 </p>
+</li>
+<li><p>PLLN</p>
+<p>位 14:6 PLLN： 适用于 VCO 的主 PLL (PLL) 倍频系数 (Main PLL (PLL) multiplication factor for VCO)<br>由软件置 1 和清零，用于控制 VCO 的倍频系数。这些位只能在 PLL 已禁止时写入。写入这<br>些位时只允许使用半字和字访问。<br>小心： 软件必须正确设置这些位，确保 VCO 输出频率介于 192 和 432 MHz 之间。<br>VCO 输出频率 &#x3D; VCO 输入频率 × PLLN 并且 192  PLLN  432<br>000000000： PLLN &#x3D; 0，错误配置<br>000000001： PLLN &#x3D; 1，错误配置<br>…<br>011000000： PLLN &#x3D; 192<br>…<br>110110000： PLLN &#x3D; 432<br>110110001： PLLN &#x3D; 433，错误配置<br>…<br>111111111： PLLN &#x3D; 511，错误配置 </p>
+</li>
+<li><p>PLLM</p>
+<p>位 5:0 PLLM： 主 PLL (PLL) 和音频 PLL (PLLI2S) 输入时钟的分频系数 (Division factor for the main<br>PLL (PLL) and audio PLL (PLLI2S) input clock)<br>由软件置 1 和清零，用于在 VCO 之前对 PLL 和 PLLI2S 输入时钟进行分频。这些位只有在<br>PLL 和 PLLI2S 已禁止时才可写入。<br>小心：  | 软件必须正确设置这些位，确保 VCO 输入频率介于 1 和 2 MHz 之间。建议选择<br>2 MHz 的频率，以便限制 PLL 抖动。VCO 输入频率 &#x3D; PLL 输入时钟频率 &#x2F; PLLM 并且 2  PLLM  63<br>000000： PLLM &#x3D; 0，错误配置<br>000001： PLLM &#x3D; 1，错误配置<br>000010： PLLM &#x3D; 2<br>000011： PLLM &#x3D; 3<br>000100： PLLM &#x3D; 4<br>…<br>111110： PLLM &#x3D; 62<br>111111： PLLM &#x3D; 63</p>
+</li>
+</ul>
+</li>
+<li><p><img src="C:/Users/dane/Desktop/2.RCC.textbundle/assets/cca41744e7ede13650a8ac947586e852507d14c76750b4c7a5114fcd89a8c144.png"></p>
+</li>
+</ul>
+</li>
+<li><p>CFGR</p>
+<ul>
+<li>RCC clock configuration register</li>
+<li><img src="C:/Users/dane/Desktop/2.RCC.textbundle/assets/a5c0b19230e2ce4c90f8bbe5071b9e376a25281a8a7beaa881d5051aac3c45f9.png"></li>
+</ul>
+</li>
+<li><p>CIR</p>
+<ul>
+<li>RCC clock interrupt register</li>
+</ul>
+</li>
+<li><p>AHB1RSTR</p>
+<ul>
+<li>RCC AHB1 peripheral reset register</li>
+</ul>
+</li>
+<li><p>AHB2RSTR</p>
+<ul>
+<li>RCC AHB2 peripheral reset register</li>
+</ul>
+</li>
+<li><p>AHB3RSTR</p>
+<ul>
+<li>RCC AHB3 peripheral reset register</li>
+</ul>
+</li>
+<li><p>RESERVED0</p>
+<ul>
+<li>Reserved, 0x1C</li>
+</ul>
+</li>
+<li><p>APB1RSTR</p>
+<ul>
+<li>RCC APB1 peripheral reset register</li>
+</ul>
+</li>
+<li><p>APB2RSTR</p>
+<ul>
+<li>RCC APB2 peripheral reset register</li>
+</ul>
+</li>
+<li><p>RESERVED1[2]</p>
+<ul>
+<li>Reserved, 0x28-0x2C</li>
+</ul>
+</li>
+<li><p>AHB1ENR</p>
+<ul>
+<li>RCC AHB1 peripheral clock register</li>
+</ul>
+</li>
+<li><p>AHB2ENR</p>
+<ul>
+<li>RCC AHB2 peripheral clock register</li>
+</ul>
+</li>
+<li><p>AHB3ENR</p>
+<ul>
+<li>RCC AHB3 peripheral clock register</li>
+</ul>
+</li>
+<li><p>RESERVED2</p>
+<ul>
+<li>Reserved, 0x3C</li>
+</ul>
+</li>
+<li><p>APB1ENR</p>
+<ul>
+<li>RCC APB1 peripheral clock enable register</li>
+</ul>
+</li>
+<li><p>APB2ENR</p>
+<ul>
+<li>RCC APB2 peripheral clock enable register</li>
+</ul>
+</li>
+<li><p>RESERVED3[2]</p>
+<ul>
+<li>Reserved, 0x48-0x4C</li>
+</ul>
+</li>
+<li><p>AHB1LPENR</p>
+<ul>
+<li>RCC AHB1 peripheral clock enable in low power mode register</li>
+</ul>
+</li>
+<li><p>AHB2LPENR</p>
+<ul>
+<li>RCC AHB2 peripheral clock enable in low power mode register</li>
+</ul>
+</li>
+<li><p>AHB3LPENR</p>
+<ul>
+<li>RCC AHB3 peripheral clock enable in low power mode register</li>
+</ul>
+</li>
+<li><p>RESERVED4</p>
+<ul>
+<li>Reserved, 0x5C</li>
+</ul>
+</li>
+<li><p>APB1LPENR</p>
+<ul>
+<li>RCC APB1 peripheral clock enable in low power mode register</li>
+</ul>
+</li>
+<li><p>APB2LPENR</p>
+<ul>
+<li>RCC APB2 peripheral clock enable in low power mode register</li>
+</ul>
+</li>
+<li><p>RESERVED5[2]</p>
+<ul>
+<li>Reserved, 0x68-0x6C</li>
+</ul>
+</li>
+<li><p>BDCR</p>
+<ul>
+<li>RCC Backup domain control register</li>
+</ul>
+</li>
+<li><p>CSR</p>
+<ul>
+<li>RCC clock control &amp; status register</li>
+</ul>
+</li>
+<li><p>RESERVED6[2]</p>
+<ul>
+<li>Reserved, 0x78-0x7C</li>
+</ul>
+</li>
+<li><p>SSCGR</p>
+<ul>
+<li>RCC spread spectrum clock generation register</li>
+</ul>
+</li>
+<li><p>PLLI2SCFGR</p>
+<ul>
+<li>RCC PLLI2S configuration register</li>
+</ul>
+</li>
+<li><p>PLLSAICFGR</p>
+<ul>
+<li>RCC PLLSAI configuration register</li>
+</ul>
+</li>
+<li><p>DCKCFGR</p>
+<ul>
+<li>RCC Dedicated Clocks configuration register</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -179,7 +557,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -192,17 +570,107 @@
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://freshwinder.github.io/2022/03/06/stm32_gpio_rcc_record/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-  
-    </div></section>
+
   
 
-    
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#GPIO"><span class="toc-number">1.</span> <span class="toc-text">GPIO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-GPIO-TypeDef"><span class="toc-number">2.</span> <span class="toc-text">1.GPIO_TypeDef</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#uint32-t-MODER"><span class="toc-number">2.1.</span> <span class="toc-text">uint32_t MODER</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uint32-t-OTYPER"><span class="toc-number">2.2.</span> <span class="toc-text">uint32_t OTYPER</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uint32-t-OSPEEDR"><span class="toc-number">2.3.</span> <span class="toc-text">uint32_t OSPEEDR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uint32-t-PUPDR"><span class="toc-number">2.4.</span> <span class="toc-text">uint32_t PUPDR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uint32-t-IDR"><span class="toc-number">2.5.</span> <span class="toc-text">uint32_t IDR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uint32-t-ODR"><span class="toc-number">2.6.</span> <span class="toc-text">uint32_t ODR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uint16-t-RSRRL"><span class="toc-number">2.7.</span> <span class="toc-text">uint16_t RSRRL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uint16-t-BSRRH"><span class="toc-number">2.8.</span> <span class="toc-text">uint16_t BSRRH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uint32-t-LCKR"><span class="toc-number">2.9.</span> <span class="toc-text">uint32_t LCKR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#uint32-t-AFR-2"><span class="toc-number">2.10.</span> <span class="toc-text">uint32_t AFR[2]</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RCC"><span class="toc-number">3.</span> <span class="toc-text">RCC</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-RCC"><span class="toc-number"></span> <span class="toc-text">2.RCC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E4%BD%8D"><span class="toc-number">1.</span> <span class="toc-text">复位</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E5%A4%8D%E4%BD%8D"><span class="toc-number">1.1.</span> <span class="toc-text">系统复位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%B5%E6%BA%90%E5%A4%8D%E4%BD%8D"><span class="toc-number">1.2.</span> <span class="toc-text">电源复位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E5%9F%9F%E5%A4%8D%E4%BD%8D"><span class="toc-number">1.3.</span> <span class="toc-text">备份域复位</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E9%92%9F"><span class="toc-number">2.</span> <span class="toc-text">时钟</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E6%97%B6%E9%92%9F"><span class="toc-number">2.1.</span> <span class="toc-text">内部时钟</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E9%92%9F%E8%BE%93%E5%87%BA%E5%8A%9F%E8%83%BD"><span class="toc-number">2.2.</span> <span class="toc-text">时钟输出功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E-TIM5-x2F-TIM11-%E7%9A%84%E5%86%85%E9%83%A8-x2F-%E5%A4%96%E9%83%A8%E6%97%B6%E9%92%9F%E6%B5%8B%E9%87%8F"><span class="toc-number">2.3.</span> <span class="toc-text">基于 TIM5&#x2F;TIM11 的内部&#x2F;外部时钟测量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RCC%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">RCC寄存器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#uint32-t"><span class="toc-number">3.1.</span> <span class="toc-text">uint32_t</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+  
+  
+  
+
+  
+
+  
+
+  
 
 
           </div>
@@ -225,8 +693,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
