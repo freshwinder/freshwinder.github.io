@@ -15,11 +15,13 @@
 <meta property="og:site_name" content="Winder blog">
 <meta property="og:description" content="1234567891011121314151617typedef struct&amp;#123;  __IO uint16_t SR;         &#x2F;*!&lt; USART Status register,                   Address offset: 0x00 *&#x2F;  uint16_t      RESERVED0;  &#x2F;*!&lt; Reserved, 0x02">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://freshwinder.github.io/2022/03/08/220308-UART-note/usart_block_diagram.jpg">
 <meta property="article:published_time" content="2022-03-08T12:25:00.000Z">
-<meta property="article:modified_time" content="2022-03-14T16:20:27.979Z">
+<meta property="article:modified_time" content="2022-03-14T16:58:08.112Z">
 <meta property="article:author" content="Winder">
 <meta property="article:tag" content="STM32">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://freshwinder.github.io/2022/03/08/220308-UART-note/usart_block_diagram.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Winder blog" type="application/atom+xml">
   
@@ -187,7 +189,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">uint32_t</span> USART_BaudRate;           </span><br><span class="line">  <span class="type">uint16_t</span> USART_WordLength;         </span><br><span class="line">  <span class="type">uint16_t</span> USART_StopBits;            </span><br><span class="line">  <span class="type">uint16_t</span> USART_Parity;             </span><br><span class="line">  <span class="type">uint16_t</span> USART_Mode;                </span><br><span class="line">  <span class="type">uint16_t</span> USART_HardwareFlowControl; </span><br><span class="line">&#125; USART_InitTypeDef;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>USART_BaudRate: this member configures the usart communication baud rate.<br>                            the baud rate computed using the following formula:<br>                              - inter divider &#x3D; (PCLKZx) &#x2F; ( 8 * (OVR8 + 1) * (USART_InitStrut-&gt;USART_BaudRate) )<br>                              - fractional divider &#x3D; ((intergerdivider - ((u32)integerdivider)) * 8 * (OVR8 + 1)) + 0.5<br>                              - where OVR8 is the “oversampling by 8 mode” configuration bit in the CR1 register</li>
+<li>USART_BaudRate: this member configures the usart communication baud rate.<br>                            the baud rate computed using the following formula:<br>                                          - inter divider &#x3D; (PCLKZx) &#x2F; ( 8 * (OVR8 + 1) * (USART_InitStrut-&gt;USART_BaudRate) )<br>                                          - fractional divider &#x3D; ((intergerdivider - ((u32)integerdivider)) * 8 * (OVR8 + 1)) + 0.5<br>                                          - where OVR8 is the “oversampling by 8 mode” configuration bit in the CR1 register</li>
 <li>USART_Wordlength: specifies the number of data bits transmitted or received in a frame.</li>
 <li>USART_StopBIts: specifies the number of stop bits transmitted.</li>
 <li>USART_Parity: specifies the paritymode.</li>
@@ -218,12 +220,12 @@
 <li>noise flag</li>
 <li>frame err flag</li>
 <li>parity err flag</li>
-<li></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
+<p><img src="/2022/03/08/220308-UART-note/usart_block_diagram.jpg" alt="usart_block_diagram"></p>
 
       
 
