@@ -8,14 +8,15 @@
   <link rel="dns-prefetch" href="https://freshwinder.github.io">
   <title>Winder blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="RTOS、MCU">
+  <meta name="description" content="winder MCU embedded learning note">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Winder blog">
 <meta property="og:url" content="https://freshwinder.github.io/index.html">
 <meta property="og:site_name" content="Winder blog">
-<meta property="og:description" content="RTOS、MCU">
+<meta property="og:description" content="winder MCU embedded learning note">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Winder">
+<meta property="article:tag" content="RTOS、MCU">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Winder blog" type="application/atom+xml">
@@ -140,19 +141,515 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-stm32_gpio_rcc_record" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-220315-HEXO-note" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2022/03/06/stm32_gpio_rcc_record/">1.STM32 GPIO and RCC principle learning record</a>
+      <a class="article-title" href="/2022/03/14/220315-HEXO-note/">HEXO note</a>
     </h1>
   
 
         
-        <a href="/2022/03/06/stm32_gpio_rcc_record/" class="archive-article-date">
+        <a href="/2022/03/14/220315-HEXO-note/" class="archive-article-date">
+  	<time datetime="2022-03-14T15:36:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>[TOC]</p>
+<h1 id="1-build-site"><a href="#1-build-site" class="headerlink" title="1.build site"></a>1.build site</h1><p>After install Hexo, execute follow command, Hexo will build files that we need in the specified folder.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init &lt;folder&gt;</span><br><span class="line">$ cd &lt;folder&gt;</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+
+<p>After the creation is completed, the directory of the specified folder as following:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml</span><br><span class="line">├── package.json</span><br><span class="line">├── scaffolds</span><br><span class="line">├── source</span><br><span class="line">|   ├── _drafts</span><br><span class="line">|   └── _posts</span><br><span class="line">└── themes</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>_config.yml<ul>
+<li>the setting info of the site</li>
+</ul>
+</li>
+<li>package.json<ul>
+<li>application info. e.g: EJS, Stylus and Markdown renderer.</li>
+</ul>
+</li>
+<li>scaffolds<ul>
+<li>template folder. when you create a new article, Hexo will build files according to the scaffold folder.</li>
+<li>Hexo&#96;s template refers to the content that is populated by default in a new article file. For example: if you modify the Front-matter content in the scaffold&#x2F;post.md, this modification will be included every time a new article is created.</li>
+</ul>
+</li>
+</ul>
+<h1 id="2-Instruction"><a href="#2-Instruction" class="headerlink" title="2.Instruction"></a>2.Instruction</h1><h3 id="init"><a href="#init" class="headerlink" title="init"></a>init</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init [folder]</span><br></pre></td></tr></table></figure>
+
+<p>The following steps are performed:</p>
+<ol>
+<li>Git clone hexo-starter and hexo-theme-landscape theme to the specified folder.</li>
+<li>Download dependencies using Yam 1. PNPM or NPM package manager.</li>
+</ol>
+<h3 id="new"><a href="#new" class="headerlink" title="new"></a>new</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new [layout] &lt;title&gt;</span><br></pre></td></tr></table></figure>
+
+<p>create a new article, such as</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new &quot;post title with whitespace&quot;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>options</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-p, –path</td>
+<td>custom new article path</td>
+</tr>
+<tr>
+<td>-r, –replace</td>
+<td>if there is an article with the same name, replace it</td>
+</tr>
+<tr>
+<td>-s, –slug</td>
+<td>the Slug of the article, as the filename of the new article and the URL of the post</td>
+</tr>
+</tbody></table>
+<p>By default, Hexo uses the title of the article to determine the path of the article file. For standalone pages, Hexo will create a directory named by the title and  create a places an index.md file in the directory. you can override this behavior by using the –path parameter:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page -- path about/me &quot;About me&quot;</span><br></pre></td></tr></table></figure>
+
+<p>The above command creates a source&#x2F;about&#x2F;me.md file with the title “About me” in Front Matter.</p>
+<h3 id="generate"><a href="#generate" class="headerlink" title="generate"></a>generate</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br><span class="line">$ hexo g</span><br></pre></td></tr></table></figure>
+
+<p>generate the static file.</p>
+<table>
+<thead>
+<tr>
+<th>options</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-d, –deploy</td>
+<td>immediately deploy the site after the files is generated</td>
+</tr>
+<tr>
+<td>-w, –watch</td>
+<td>Monitor file changes</td>
+</tr>
+<tr>
+<td>-b, –bail</td>
+<td>err handle</td>
+</tr>
+<tr>
+<td>-f, –force</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="server"><a href="#server" class="headerlink" title="server"></a>server</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>start-up the server, by default, access site is <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000/</a></p>
+<table>
+<thead>
+<tr>
+<th>options</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-p, –port</td>
+<td>reset port</td>
+</tr>
+<tr>
+<td>-s, –static</td>
+<td>only use static files</td>
+</tr>
+<tr>
+<td>-l, –log</td>
+<td>start-up log</td>
+</tr>
+</tbody></table>
+<h3 id="deploy"><a href="#deploy" class="headerlink" title="deploy"></a>deploy</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
+
+<p>deploy site</p>
+<table>
+<thead>
+<tr>
+<th>options</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-g, –generate</td>
+<td>generate static files in advance before deployment</td>
+</tr>
+</tbody></table>
+<h3 id="render"><a href="#render" class="headerlink" title="render"></a>render</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo render &lt;file1&gt; [file2] ...</span><br></pre></td></tr></table></figure>
+
+<p>render files</p>
+<table>
+<thead>
+<tr>
+<th>options</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-o, –output</td>
+<td>set the output path</td>
+</tr>
+</tbody></table>
+<h1 id="3-Tag-Plugins"><a href="#3-Tag-Plugins" class="headerlink" title="3.Tag Plugins"></a>3.Tag Plugins</h1><h3 id="Cite-articles-from-Internet"><a href="#Cite-articles-from-Internet" class="headerlink" title="Cite articles from Internet"></a>Cite articles from Internet</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% blockquote Seth Godin http://sethgodin.typepad.com/seths_blog/2009/07/welcome-to-island-marketing.html Welcome to Island Marketing %&#125;</span><br><span class="line">Every interaction is both precious and an opportunity to delight.</span><br><span class="line">&#123;% endblockquote %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Every interaction is both precious and an opportunity to delight.<br>Seth GodinWelcome to Island Marketing</p>
+<h3 id="insert-code-into-the-article"><a href="#insert-code-into-the-article" class="headerlink" title="insert code into the article"></a>insert code into the article</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% codeblock [title] [lang:language] [url] [link text] [additional options] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="4-Asset-folder"><a href="#4-Asset-folder" class="headerlink" title="4.Asset folder"></a>4.Asset folder</h1><p>Asset represent all files in the folder except article file, such image, CSS, JS file and so on. For example, if you only have a few images in your Hexo project, the easiest way is to put them in the source&#x2F;images folder, And then through something like <img src="/images/image.jpg"> to access them.</p>
+<p>For those who want to provide image or other resources more regularly and want to spread their resources across articles, Hexo also provides a more organized way to manage resources. this slightly complex but very handy resource management feature can be turned on by setting the <em>post_asset_folder</em> option in the config.yml file to True.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">_config.yml</span><br><span class="line">post_asset_folder: true</span><br></pre></td></tr></table></figure>
+
+<p>when the resources management function is enabled, Hexo will automatically create a new asset folder each time when you execute</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new [layout] &lt;title&gt;</span><br></pre></td></tr></table></figure>
+
+<p>command</p>
+<h3 id="Relative-path-reference-tag-plug-in"><a href="#Relative-path-reference-tag-plug-in" class="headerlink" title="Relative path reference tag plug-in"></a>Relative path reference tag plug-in</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% asset_path slug %&#125;</span><br><span class="line">&#123;% asset_img slug [title] %&#125;</span><br><span class="line">&#123;% asset_link slug [title] %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>the correct way to reference an image is to use the following tag plugin instead of markdown:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% asset_img example.jpg This is an example image %&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">HEXO</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/learning-note//" class="article-tag-list-link color4">learning note</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/03/14/220315-HEXO-note/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-220308-UART-note" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/03/08/220308-UART-note/">3.USART note</a>
+    </h1>
+  
+
+        
+        <a href="/2022/03/08/220308-UART-note/" class="archive-article-date">
+  	<time datetime="2022-03-08T12:25:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-08</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> SR;         <span class="comment">/*!&lt; USART Status register,                   Address offset: 0x00 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED0;  <span class="comment">/*!&lt; Reserved, 0x02                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> DR;         <span class="comment">/*!&lt; USART Data register,                     Address offset: 0x04 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED1;  <span class="comment">/*!&lt; Reserved, 0x06                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> BRR;        <span class="comment">/*!&lt; USART Baud rate register,                Address offset: 0x08 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED2;  <span class="comment">/*!&lt; Reserved, 0x0A                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> CR1;        <span class="comment">/*!&lt; USART Control register 1,                Address offset: 0x0C */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED3;  <span class="comment">/*!&lt; Reserved, 0x0E                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> CR2;        <span class="comment">/*!&lt; USART Control register 2,                Address offset: 0x10 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED4;  <span class="comment">/*!&lt; Reserved, 0x12                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> CR3;        <span class="comment">/*!&lt; USART Control register 3,                Address offset: 0x14 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED5;  <span class="comment">/*!&lt; Reserved, 0x16                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> GTPR;       <span class="comment">/*!&lt; USART Guard time and prescaler register, Address offset: 0x18 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED6;  <span class="comment">/*!&lt; Reserved, 0x1A                                                */</span></span><br><span class="line">&#125; USART_TypeDef;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>SR : status register<ul>
+<li>[0] PE: when parity err occur in the receive mode, this bit will set 1 by hardware</li>
+<li>[1] FE: when framing err occur, this bit will set 1 by hardware</li>
+<li>[2] NF: when detected noise, this bit wil set 1 by hardware</li>
+<li>[3] ORE: overrun err occur, set 1 by hardware</li>
+<li>[4] IDLE: when the idle line was detected, set 1 by hardware</li>
+<li>[5] RXNE: read data register not empty, when data in the RDR register was transmitted to DR register, this register was set  1, at this time, if the IDLEIE bit in the CR1 register has been  set 1, it will produce interrupt.</li>
+<li>[6] TC: transmission complete, set 1 by hardware</li>
+<li>[7] TXE: transmit data register empty, set 1 by hardware</li>
+<li>[8] LBD:  LIN break detecting flag </li>
+<li>[9] CTS:  CTS flag</li>
+</ul>
+</li>
+<li>DR : data register</li>
+<li>BRR : baud data resister</li>
+<li>CR1: control register1</li>
+<li>CR2: control register2</li>
+<li>CR3: control register3</li>
+<li>CTRP: usart guard time and prescaler register</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">uint32_t</span> USART_BaudRate;           </span><br><span class="line">  <span class="type">uint16_t</span> USART_WordLength;         </span><br><span class="line">  <span class="type">uint16_t</span> USART_StopBits;            </span><br><span class="line">  <span class="type">uint16_t</span> USART_Parity;             </span><br><span class="line">  <span class="type">uint16_t</span> USART_Mode;                </span><br><span class="line">  <span class="type">uint16_t</span> USART_HardwareFlowControl; </span><br><span class="line">&#125; USART_InitTypeDef;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>USART_BaudRate: this member configures the usart communication baud rate.<br>                            the baud rate computed using the following formula:<br>                              - inter divider &#x3D; (PCLKZx) &#x2F; ( 8 * (OVR8 + 1) * (USART_InitStrut-&gt;USART_BaudRate) )<br>                              - fractional divider &#x3D; ((intergerdivider - ((u32)integerdivider)) * 8 * (OVR8 + 1)) + 0.5<br>                              - where OVR8 is the “oversampling by 8 mode” configuration bit in the CR1 register</li>
+<li>USART_Wordlength: specifies the number of data bits transmitted or received in a frame.</li>
+<li>USART_StopBIts: specifies the number of stop bits transmitted.</li>
+<li>USART_Parity: specifies the paritymode.</li>
+<li>USART_Mode: specifies whether the receive or transmit mode is enabled or disabled.</li>
+<li>USART_HardwareflowControl: specifies whether the hard flow control mode is endable or disable.</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"></span><br><span class="line">  <span class="type">uint16_t</span> USART_Clock;   <span class="comment">/*!&lt; Specifies whether the USART clock is enabled or disabled.</span></span><br><span class="line"><span class="comment">                               This parameter can be a value of @ref USART_Clock */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">uint16_t</span> USART_CPOL;    <span class="comment">/*!&lt; Specifies the steady state of the serial clock.</span></span><br><span class="line"><span class="comment">                               This parameter can be a value of @ref USART_Clock_Polarity */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">uint16_t</span> USART_CPHA;    <span class="comment">/*!&lt; Specifies the clock transition on which the bit capture is made.</span></span><br><span class="line"><span class="comment">                               This parameter can be a value of @ref USART_Clock_Phase */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">uint16_t</span> USART_LastBit; <span class="comment">/*!&lt; Specifies whether the clock pulse corresponding to the last transmitted</span></span><br><span class="line"><span class="comment">                               data bit (MSB) has to be output on the SCLK pin in synchronous mode.</span></span><br><span class="line"><span class="comment">                               This parameter can be a value of @ref USART_Last_Bit */</span></span><br><span class="line">&#125; USART_ClockInitTypeDef;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>USART_Clock: specifies whether the usart clock is enable or disable.</li>
+<li>USART_CPOL: specifies the steady state of the serial clock</li>
+<li>USART_CPHA: Specifies the clock transition on which the bit capture is made.</li>
+<li>USART_LastBit: Specifies whether the clock pulse corresponding to the last transmitted data bit (MSB) has to be output on the SCLK pin in synchronous mode.</li>
+</ul>
+<h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h4><ul>
+<li>data bit length: 8-9bit</li>
+<li>support 1-2 stop-bit</li>
+<li>support DMA buffer transfer</li>
+<li>interrupt support: <ul>
+<li>transmission interrupt<ul>
+<li>buffer full interrupt</li>
+<li>buffer empty interrupt</li>
+<li>transmission finish interrupt</li>
+</ul>
+</li>
+<li>four err flag check interrupt<ul>
+<li>overflow flag</li>
+<li>noise flag</li>
+<li>frame err flag</li>
+<li>parity err flag</li>
+<li></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">STM32</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/learning-note//" class="article-tag-list-link color4">learning note</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/03/08/220308-UART-note/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-220307-DMA-note" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/03/07/220307-DMA-note/">2.DMA note</a>
+    </h1>
+  
+
+        
+        <a href="/2022/03/07/220307-DMA-note/" class="archive-article-date">
+  	<time datetime="2022-03-07T12:38:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="DMA-note-base-stm32f407-manual"><a href="#DMA-note-base-stm32f407-manual" class="headerlink" title="DMA note base stm32f407 manual"></a>DMA note base stm32f407 manual</h1><h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction:"></a>Introduction:</h4><ul>
+<li>DMA provide high-speed data transmission between peripheral and mem and between mem and mem transport.</li>
+<li>DMA can transmit data quickly without any cpu operation, which save resources from cpu.</li>
+<li>DMA controller combines the powerful dual AHB main bus architecture with independent FIFO together, the system bandwidth is optimized</li>
+<li>the stm32&#96;s two DMA controllers have a total of 16 data stream (8 stream for each DMA controller), each DMA controller used to manager one or many mem access request. each data stream has a total of 8 channel (request). each channel has one arbiter, which used to handle the priority of the DMA request.</li>
+</ul>
+<h4 id="Features"><a href="#Features" class="headerlink" title="Features:"></a>Features:</h4><ul>
+<li>dual AHB main bus architecture, one for mem access and the other for peripheral access.</li>
+<li>AHB slave programming interface that only supports 32-bit access</li>
+<li>each DMA controller has eight data stream, each data stream has up to eight (or requests)</li>
+<li>each data stream has a separate 4 level 32-bit FIFO mem buffer, which can be used in FIFO mode or direct connection mode.<ul>
+<li>FIFO mode: the threshold level can be selected as 1&#x2F;4, 1&#x2F;2 or 3&#x2F;4 of the FIFO size by software.</li>
+<li>direct mode: each DMA request immediately initiates a transfer to memory. when the DMA request is configured to transmit data in memory to peripheral mode in direct mode (FIFO prohibited), DMA will only pre load one data from memory it is loaded into the internal FIFO to ensure that the data is transmitted immediately once the peripheral trigger the DMA request.</li>
+</ul>
+</li>
+<li>each data stream can be configured by hardware to<ul>
+<li>support the common channel between peripheral and mem and between mem and mem.</li>
+<li>it also support double buffer channels with double buffers on the memory side.</li>
+</ul>
+</li>
+<li>each data stream also supports mem to mem transmission triggered by software (DMA2 controller only).</li>
+<li><strong>5 event flag (DMA半传输， DMA传输完成、DMA传输错误、DMA FIFO错误、 直接模式错误)</strong></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">STM32</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/learning-note//" class="article-tag-list-link color4">learning note</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/03/07/220307-DMA-note/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-220306-GPIO-RCC-note" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/03/06/220306-GPIO-RCC-note/">1.GPIO note</a>
+    </h1>
+  
+
+        
+        <a href="/2022/03/06/220306-GPIO-RCC-note/" class="archive-article-date">
   	<time datetime="2022-03-06T13:07:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-06</time>
 </a>
         
@@ -567,7 +1064,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2022/03/06/stm32_gpio_rcc_record/">展开全文 >></a>
+          <a class="article-more-a" href="/2022/03/06/220306-GPIO-RCC-note/">展开全文 >></a>
         </p>
       
 
@@ -628,7 +1125,7 @@
 		toc_hide_index: true,
 		root: "/",
 		innerArchive: true,
-		showTags: false
+		showTags: true
 	}
 </script>
 
@@ -708,6 +1205,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">STM32</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">HEXO</a>
               </li>
             
             <div class="clearfix"></div>

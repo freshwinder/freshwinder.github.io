@@ -6,17 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://freshwinder.github.io">
-  <title>Archives: 2022 | Winder blog</title>
+  <title>3.USART note | Winder blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="winder MCU embedded learning note">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Winder blog">
-<meta property="og:url" content="https://freshwinder.github.io/archives/2022/index.html">
+  <meta name="description" content="1234567891011121314151617typedef struct&amp;#123;  __IO uint16_t SR;         &#x2F;*!&lt; USART Status register,                   Address offset: 0x00 *&#x2F;  uint16_t      RESERVED0;  &#x2F;*!&lt; Reserved, 0x02">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3.USART note">
+<meta property="og:url" content="https://freshwinder.github.io/2022/03/08/220308-UART-note/index.html">
 <meta property="og:site_name" content="Winder blog">
-<meta property="og:description" content="winder MCU embedded learning note">
+<meta property="og:description" content="1234567891011121314151617typedef struct&amp;#123;  __IO uint16_t SR;         &#x2F;*!&lt; USART Status register,                   Address offset: 0x00 *&#x2F;  uint16_t      RESERVED0;  &#x2F;*!&lt; Reserved, 0x02">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-08T12:25:00.000Z">
+<meta property="article:modified_time" content="2022-03-14T16:20:27.979Z">
 <meta property="article:author" content="Winder">
-<meta property="article:tag" content="RTOS、MCU">
+<meta property="article:tag" content="STM32">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Winder blog" type="application/atom+xml">
@@ -139,85 +141,97 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-220308-UART-note" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/03/14/220315-HEXO-note/" class="archive-article-date">
-  	<time datetime="2022-03-14T15:36:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-14</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/03/14/220315-HEXO-note/">HEXO note</a>
+    <h1 class="article-title" itemprop="name">
+      3.USART note
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">HEXO</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/learning-note//" class="article-tag-list-link color4">learning note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/03/08/220308-UART-note/" class="archive-article-date">
+        
+        <a href="/2022/03/08/220308-UART-note/" class="archive-article-date">
   	<time datetime="2022-03-08T12:25:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-08</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/03/08/220308-UART-note/">3.USART note</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> SR;         <span class="comment">/*!&lt; USART Status register,                   Address offset: 0x00 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED0;  <span class="comment">/*!&lt; Reserved, 0x02                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> DR;         <span class="comment">/*!&lt; USART Data register,                     Address offset: 0x04 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED1;  <span class="comment">/*!&lt; Reserved, 0x06                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> BRR;        <span class="comment">/*!&lt; USART Baud rate register,                Address offset: 0x08 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED2;  <span class="comment">/*!&lt; Reserved, 0x0A                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> CR1;        <span class="comment">/*!&lt; USART Control register 1,                Address offset: 0x0C */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED3;  <span class="comment">/*!&lt; Reserved, 0x0E                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> CR2;        <span class="comment">/*!&lt; USART Control register 2,                Address offset: 0x10 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED4;  <span class="comment">/*!&lt; Reserved, 0x12                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> CR3;        <span class="comment">/*!&lt; USART Control register 3,                Address offset: 0x14 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED5;  <span class="comment">/*!&lt; Reserved, 0x16                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> GTPR;       <span class="comment">/*!&lt; USART Guard time and prescaler register, Address offset: 0x18 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED6;  <span class="comment">/*!&lt; Reserved, 0x1A                                                */</span></span><br><span class="line">&#125; USART_TypeDef;</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
+<ul>
+<li>SR : status register<ul>
+<li>[0] PE: when parity err occur in the receive mode, this bit will set 1 by hardware</li>
+<li>[1] FE: when framing err occur, this bit will set 1 by hardware</li>
+<li>[2] NF: when detected noise, this bit wil set 1 by hardware</li>
+<li>[3] ORE: overrun err occur, set 1 by hardware</li>
+<li>[4] IDLE: when the idle line was detected, set 1 by hardware</li>
+<li>[5] RXNE: read data register not empty, when data in the RDR register was transmitted to DR register, this register was set  1, at this time, if the IDLEIE bit in the CR1 register has been  set 1, it will produce interrupt.</li>
+<li>[6] TC: transmission complete, set 1 by hardware</li>
+<li>[7] TXE: transmit data register empty, set 1 by hardware</li>
+<li>[8] LBD:  LIN break detecting flag </li>
+<li>[9] CTS:  CTS flag</li>
+</ul>
+</li>
+<li>DR : data register</li>
+<li>BRR : baud data resister</li>
+<li>CR1: control register1</li>
+<li>CR2: control register2</li>
+<li>CR3: control register3</li>
+<li>CTRP: usart guard time and prescaler register</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">uint32_t</span> USART_BaudRate;           </span><br><span class="line">  <span class="type">uint16_t</span> USART_WordLength;         </span><br><span class="line">  <span class="type">uint16_t</span> USART_StopBits;            </span><br><span class="line">  <span class="type">uint16_t</span> USART_Parity;             </span><br><span class="line">  <span class="type">uint16_t</span> USART_Mode;                </span><br><span class="line">  <span class="type">uint16_t</span> USART_HardwareFlowControl; </span><br><span class="line">&#125; USART_InitTypeDef;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>USART_BaudRate: this member configures the usart communication baud rate.<br>                            the baud rate computed using the following formula:<br>                              - inter divider &#x3D; (PCLKZx) &#x2F; ( 8 * (OVR8 + 1) * (USART_InitStrut-&gt;USART_BaudRate) )<br>                              - fractional divider &#x3D; ((intergerdivider - ((u32)integerdivider)) * 8 * (OVR8 + 1)) + 0.5<br>                              - where OVR8 is the “oversampling by 8 mode” configuration bit in the CR1 register</li>
+<li>USART_Wordlength: specifies the number of data bits transmitted or received in a frame.</li>
+<li>USART_StopBIts: specifies the number of stop bits transmitted.</li>
+<li>USART_Parity: specifies the paritymode.</li>
+<li>USART_Mode: specifies whether the receive or transmit mode is enabled or disabled.</li>
+<li>USART_HardwareflowControl: specifies whether the hard flow control mode is endable or disable.</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"></span><br><span class="line">  <span class="type">uint16_t</span> USART_Clock;   <span class="comment">/*!&lt; Specifies whether the USART clock is enabled or disabled.</span></span><br><span class="line"><span class="comment">                               This parameter can be a value of @ref USART_Clock */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">uint16_t</span> USART_CPOL;    <span class="comment">/*!&lt; Specifies the steady state of the serial clock.</span></span><br><span class="line"><span class="comment">                               This parameter can be a value of @ref USART_Clock_Polarity */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">uint16_t</span> USART_CPHA;    <span class="comment">/*!&lt; Specifies the clock transition on which the bit capture is made.</span></span><br><span class="line"><span class="comment">                               This parameter can be a value of @ref USART_Clock_Phase */</span></span><br><span class="line"></span><br><span class="line">  <span class="type">uint16_t</span> USART_LastBit; <span class="comment">/*!&lt; Specifies whether the clock pulse corresponding to the last transmitted</span></span><br><span class="line"><span class="comment">                               data bit (MSB) has to be output on the SCLK pin in synchronous mode.</span></span><br><span class="line"><span class="comment">                               This parameter can be a value of @ref USART_Last_Bit */</span></span><br><span class="line">&#125; USART_ClockInitTypeDef;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>USART_Clock: specifies whether the usart clock is enable or disable.</li>
+<li>USART_CPOL: specifies the steady state of the serial clock</li>
+<li>USART_CPHA: Specifies the clock transition on which the bit capture is made.</li>
+<li>USART_LastBit: Specifies whether the clock pulse corresponding to the last transmitted data bit (MSB) has to be output on the SCLK pin in synchronous mode.</li>
+</ul>
+<h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h4><ul>
+<li>data bit length: 8-9bit</li>
+<li>support 1-2 stop-bit</li>
+<li>support DMA buffer transfer</li>
+<li>interrupt support: <ul>
+<li>transmission interrupt<ul>
+<li>buffer full interrupt</li>
+<li>buffer empty interrupt</li>
+<li>transmission finish interrupt</li>
+</ul>
+</li>
+<li>four err flag check interrupt<ul>
+<li>overflow flag</li>
+<li>noise flag</li>
+<li>frame err flag</li>
+<li>parity err flag</li>
+<li></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -229,7 +243,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -242,115 +256,75 @@
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/03/07/220307-DMA-note/" class="archive-article-date">
-  	<time datetime="2022-03-07T12:38:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-07</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/2022/03/14/220315-HEXO-note/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          HEXO note
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/03/07/220307-DMA-note/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">2.DMA note</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/03/07/220307-DMA-note/">2.DMA note</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">STM32</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/learning-note//" class="article-tag-list-link color4">learning note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/03/06/220306-GPIO-RCC-note/" class="archive-article-date">
-  	<time datetime="2022-03-06T13:07:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/03/06/220306-GPIO-RCC-note/">1.GPIO note</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">STM32</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/learning-note//" class="article-tag-list-link color4">learning note</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -373,8 +347,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
