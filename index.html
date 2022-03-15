@@ -498,25 +498,36 @@
         <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> SR;         <span class="comment">/*!&lt; USART Status register,                   Address offset: 0x00 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED0;  <span class="comment">/*!&lt; Reserved, 0x02                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> DR;         <span class="comment">/*!&lt; USART Data register,                     Address offset: 0x04 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED1;  <span class="comment">/*!&lt; Reserved, 0x06                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> BRR;        <span class="comment">/*!&lt; USART Baud rate register,                Address offset: 0x08 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED2;  <span class="comment">/*!&lt; Reserved, 0x0A                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> CR1;        <span class="comment">/*!&lt; USART Control register 1,                Address offset: 0x0C */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED3;  <span class="comment">/*!&lt; Reserved, 0x0E                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> CR2;        <span class="comment">/*!&lt; USART Control register 2,                Address offset: 0x10 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED4;  <span class="comment">/*!&lt; Reserved, 0x12                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> CR3;        <span class="comment">/*!&lt; USART Control register 3,                Address offset: 0x14 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED5;  <span class="comment">/*!&lt; Reserved, 0x16                                                */</span></span><br><span class="line">  __IO <span class="type">uint16_t</span> GTPR;       <span class="comment">/*!&lt; USART Guard time and prescaler register, Address offset: 0x18 */</span></span><br><span class="line">  <span class="type">uint16_t</span>      RESERVED6;  <span class="comment">/*!&lt; Reserved, 0x1A                                                */</span></span><br><span class="line">&#125; USART_TypeDef;</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>SR : status register<ul>
-<li>[0] PE: when parity err occur in the receive mode, this bit will set 1 by hardware</li>
+<li><p><strong>SR : status register</strong></p>
+<ul>
+<li><strong>[0] PE: when parity err occur in the receive mode, this bit will set 1 by hardware</strong></li>
 <li>[1] FE: when framing err occur, this bit will set 1 by hardware</li>
 <li>[2] NF: when detected noise, this bit wil set 1 by hardware</li>
 <li>[3] ORE: overrun err occur, set 1 by hardware</li>
 <li>[4] IDLE: when the idle line was detected, set 1 by hardware</li>
-<li>[5] RXNE: read data register not empty, when data in the RDR register was transmitted to DR register, this register was set  1, at this time, if the IDLEIE bit in the CR1 register has been  set 1, it will produce interrupt.</li>
-<li>[6] TC: transmission complete, set 1 by hardware</li>
+<li><strong>[5] RXNE: read data register not empty, when data in the RDR register was transmitted to DR register, this register was set  1, at this time, if the IDLEIE bit in the CR1 register has been  set 1, it will produce interrupt.</strong></li>
+<li><strong>[6] TC: transmission complete, set 1 by hardware</strong></li>
 <li>[7] TXE: transmit data register empty, set 1 by hardware</li>
 <li>[8] LBD:  LIN break detecting flag </li>
 <li>[9] CTS:  CTS flag</li>
 </ul>
 </li>
-<li>DR : data register</li>
-<li>BRR : baud data resister</li>
-<li>CR1: control register1</li>
-<li>CR2: control register2</li>
-<li>CR3: control register3</li>
-<li>CTRP: usart guard time and prescaler register</li>
+<li><p><strong>DR : data register</strong></p>
+</li>
+<li><p><strong>BRR : baud data resister</strong></p>
+<ul>
+<li><strong>[11:0]DIV_Mantissa, USARTDIV&#96;s mantissa</strong></li>
+<li><strong>[3:0]DIV_Fraction, USARTDIV&#96;s fraction</strong></li>
+</ul>
+</li>
+<li><p>CR1: control register1</p>
+</li>
+<li><p>CR2: control register2</p>
+</li>
+<li><p>CR3: control register3</p>
+</li>
+<li><p>CTRP: usart guard time and prescaler register</p>
+</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="type">uint32_t</span> USART_BaudRate;           </span><br><span class="line">  <span class="type">uint16_t</span> USART_WordLength;         </span><br><span class="line">  <span class="type">uint16_t</span> USART_StopBits;            </span><br><span class="line">  <span class="type">uint16_t</span> USART_Parity;             </span><br><span class="line">  <span class="type">uint16_t</span> USART_Mode;                </span><br><span class="line">  <span class="type">uint16_t</span> USART_HardwareFlowControl; </span><br><span class="line">&#125; USART_InitTypeDef;</span><br></pre></td></tr></table></figure>
 
@@ -558,6 +569,27 @@
 </li>
 </ul>
 <p><img src="/2022/03/08/220308-UART-note/usart_block_diagram.jpg" alt="usart_block_diagram"></p>
+<h3 id="Communication-process"><a href="#Communication-process" class="headerlink" title="Communication process"></a>Communication process</h3><p><img src="/2022/03/08/220308-UART-note/communication_proceess.jpg" alt="communication process"></p>
+<h3 id="UART-PARAM"><a href="#UART-PARAM" class="headerlink" title="UART PARAM"></a>UART PARAM</h3><ul>
+<li>start bit</li>
+<li>data length [8-9(if has parity bit)]</li>
+<li>parity bit (the ninth bit)</li>
+<li>stop bit length</li>
+<li>baud</li>
+</ul>
+<h3 id="Important-register"><a href="#Important-register" class="headerlink" title="Important register"></a>Important register</h3><ul>
+<li>SR register</li>
+<li>recive register</li>
+<li>send register</li>
+<li>BRR: baud register</li>
+<li>baud &#x3D; f(pclkx)&#x2F;(16*USART_DIV)</li>
+</ul>
+<h3 id="Hardware-flow-control"><a href="#Hardware-flow-control" class="headerlink" title="Hardware flow control"></a>Hardware flow control</h3><p>serial communication protocol is a kind of asynchronous communication protocol, so its data may be wrong due with the clock error. hardware flow control attend to deal with this problem.</p>
+<p>hardware flow control need extra two pins to control the communication flow.</p>
+<p><img src="/2022/03/08/220308-UART-note/RTS_CTS.png" alt="hardware flow control"></p>
+<p>Take receive data for example:</p>
+<p>when the serial communication is not finished, the RTS pin is pull up to tell the sender wait until finish, after receive completed, the RTS pin is pull down to tell the sender this communication is finish and this is prepare to receive next data.</p>
+<p><img src="/2022/03/08/220308-UART-note/RTS.png" alt="RTS receive example"></p>
 
       
 
