@@ -6,18 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://freshwinder.github.io">
-  <title>Archives: 2022 | Winder blog</title>
+  <title>220315_xr872_environment_configuration_note | Winder blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="winder MCU embedded learning note">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Winder blog">
-<meta property="og:url" content="https://freshwinder.github.io/archives/2022/index.html">
+  <meta name="description" content="cygwin installcygwin install url After download cygwin installation wizard,  start it and select Install from Internet. when the installation wizard in the choose download site step, choose a domestic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="220315_xr872_environment_configuration_note">
+<meta property="og:url" content="https://freshwinder.github.io/2022/03/15/220315-xr872-environment-configuration-note/index.html">
 <meta property="og:site_name" content="Winder blog">
-<meta property="og:description" content="winder MCU embedded learning note">
+<meta property="og:description" content="cygwin installcygwin install url After download cygwin installation wizard,  start it and select Install from Internet. when the installation wizard in the choose download site step, choose a domestic">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://freshwinder.github.io/2022/03/15/220315-xr872-environment-configuration-note/cygwin_packages_select.jpg">
+<meta property="og:image" content="https://freshwinder.github.io/2022/03/15/220315-xr872-environment-configuration-note/conpile_err.jpg">
+<meta property="article:published_time" content="2022-03-15T04:10:13.000Z">
+<meta property="article:modified_time" content="2022-03-15T04:33:51.051Z">
 <meta property="article:author" content="Winder">
-<meta property="article:tag" content="RTOS、MCU">
+<meta property="article:tag" content="ENV CONF">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://freshwinder.github.io/2022/03/15/220315-xr872-environment-configuration-note/cygwin_packages_select.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Winder blog" type="application/atom+xml">
   
@@ -139,36 +144,42 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-220315-xr872-environment-configuration-note" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/03/15/220315-xr872-environment-configuration-note/" class="archive-article-date">
-  	<time datetime="2022-03-15T04:10:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-15</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/03/15/220315-xr872-environment-configuration-note/">220315_xr872_environment_configuration_note</a>
+    <h1 class="article-title" itemprop="name">
+      220315_xr872_environment_configuration_note
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2022/03/15/220315-xr872-environment-configuration-note/" class="archive-article-date">
+  	<time datetime="2022-03-15T04:10:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="cygwin-install"><a href="#cygwin-install" class="headerlink" title="cygwin install"></a>cygwin install</h2><p><a target="_blank" rel="noopener" href="http://www.cygwin.com/">cygwin install url</a></p>
+<p>After download cygwin installation wizard,  start it and select <em>Install from Internet</em>.</p>
+<p>when the installation wizard in the choose download site step, choose a domestic mirror source such as <a target="_blank" rel="noopener" href="https://mirrors.163.com/"></a> and click next step. </p>
+<p>In select packages step, choose make, cmake, gcc, g++, binutils, and mingw package in Devel category.</p>
+<p><img src="/2022/03/15/220315-xr872-environment-configuration-note/cygwin_packages_select.jpg" alt="cygwin packages select"></p>
+<h2 id="make-err"><a href="#make-err" class="headerlink" title="make err"></a>make err</h2><p>after install cygwin, I tried to comple the firmware but got the following error:</p>
+<p><img src="/2022/03/15/220315-xr872-environment-configuration-note/conpile_err.jpg" alt="conpile_err"></p>
+<p>open the file <em>build_tone.sh</em> which got error with notepad++ and turn it format to Unix(LF) can solve this error.</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -180,7 +191,7 @@
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -193,213 +204,53 @@
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/03/14/220315-HEXO-note/" class="archive-article-date">
-  	<time datetime="2022-03-14T15:36:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-14</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2022/03/14/220315-HEXO-note/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">HEXO note</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/03/14/220315-HEXO-note/">HEXO note</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">HEXO</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/learning-note//" class="article-tag-list-link color4">learning note</a>
-        		</li>
-      		
-		</ul>
-	</div>
+        
+        
+    </div>
+</aside>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/03/08/220308-UART-note/" class="archive-article-date">
-  	<time datetime="2022-03-08T12:25:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-08</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/03/08/220308-UART-note/">3.USART note</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">STM32</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/learning-note//" class="article-tag-list-link color4">learning note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/03/07/220307-DMA-note/" class="archive-article-date">
-  	<time datetime="2022-03-07T12:38:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/03/07/220307-DMA-note/">2.DMA note</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">STM32</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/learning-note//" class="article-tag-list-link color4">learning note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/03/06/220306-GPIO-RCC-note/" class="archive-article-date">
-  	<time datetime="2022-03-06T13:07:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/03/06/220306-GPIO-RCC-note/">1.GPIO note</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">STM32</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/learning-note//" class="article-tag-list-link color4">learning note</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -422,8 +273,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

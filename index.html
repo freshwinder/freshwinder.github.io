@@ -141,6 +141,98 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-220315-xr872-environment-configuration-note" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/03/15/220315-xr872-environment-configuration-note/">220315_xr872_environment_configuration_note</a>
+    </h1>
+  
+
+        
+        <a href="/2022/03/15/220315-xr872-environment-configuration-note/" class="archive-article-date">
+  	<time datetime="2022-03-15T04:10:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="cygwin-install"><a href="#cygwin-install" class="headerlink" title="cygwin install"></a>cygwin install</h2><p><a target="_blank" rel="noopener" href="http://www.cygwin.com/">cygwin install url</a></p>
+<p>After download cygwin installation wizard,  start it and select <em>Install from Internet</em>.</p>
+<p>when the installation wizard in the choose download site step, choose a domestic mirror source such as <a target="_blank" rel="noopener" href="https://mirrors.163.com/"></a> and click next step. </p>
+<p>In select packages step, choose make, cmake, gcc, g++, binutils, and mingw package in Devel category.</p>
+<p><img src="/2022/03/15/220315-xr872-environment-configuration-note/cygwin_packages_select.jpg" alt="cygwin packages select"></p>
+<h2 id="make-err"><a href="#make-err" class="headerlink" title="make err"></a>make err</h2><p>after install cygwin, I tried to comple the firmware but got the following error:</p>
+<p><img src="/2022/03/15/220315-xr872-environment-configuration-note/conpile_err.jpg" alt="conpile_err"></p>
+<p>open the file <em>build_tone.sh</em> which got error with notepad++ and turn it format to Unix(LF) can solve this error.</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">ENV CONF</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/work-note//" class="article-tag-list-link color5">work note</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/03/15/220315-xr872-environment-configuration-note/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-220315-HEXO-note" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1209,6 +1301,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">HEXO</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">ENV CONF</a>
               </li>
             
             <div class="clearfix"></div>
