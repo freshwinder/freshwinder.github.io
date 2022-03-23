@@ -16,11 +16,12 @@
 <meta property="og:description" content="REVIEW AND SUMMARY:W25Q128 just need to look at the instructions in document in detail. so I review the SPI and DMA in detail SPI review:SPI data transmit block diagram: follow the above picture: SPI">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://freshwinder.github.io/2022/03/22/220322-DMA-with-SPI-driver-FLASH-W25Q128/SPI_data_stream_transmit_block.jpg">
+<meta property="og:image" content="https://freshwinder.github.io/2022/03/22/220322-DMA-with-SPI-driver-FLASH-W25Q128/SPI_sequential.jpg">
 <meta property="og:image" content="https://freshwinder.github.io/2022/03/22/220322-DMA-with-SPI-driver-FLASH-W25Q128/SPI_block_diagram.jpg">
 <meta property="og:image" content="https://freshwinder.github.io/2022/03/22/220322-DMA-with-SPI-driver-FLASH-W25Q128/SPI_read_only.jpg">
 <meta property="og:image" content="https://freshwinder.github.io/2022/03/22/220322-DMA-with-SPI-driver-FLASH-W25Q128/DMA_block_diagram.jpg">
 <meta property="article:published_time" content="2022-03-22T13:57:15.000Z">
-<meta property="article:modified_time" content="2022-03-23T08:23:43.218Z">
+<meta property="article:modified_time" content="2022-03-23T08:44:36.608Z">
 <meta property="article:author" content="Winder">
 <meta property="article:tag" content="STM32">
 <meta name="twitter:card" content="summary">
@@ -174,7 +175,7 @@
 <li>CPOL control the SPI clock free level, if CPOL &#x3D;&#x3D; 0,SPI clock free level is low level. On the contrary, CPOL &#x3D;&#x3D; 1, SPI clock free level is high level.</li>
 <li>CPHA control the SPI sampling timing. if CPHA &#x3D;&#x3D; 0, SPI sample  at falling edge. On the contrary, CPHA &#x3D;&#x3D; 1, SPI sample at the rising edge.</li>
 </ul>
-<p>![](SPI sequential.jpg)</p>
+<p><img src="/2022/03/22/220322-DMA-with-SPI-driver-FLASH-W25Q128/SPI_sequential.jpg" alt="SPI_sequential.jpg"></p>
 <h4 id="SPI-block-diagram"><a href="#SPI-block-diagram" class="headerlink" title="SPI block diagram:"></a>SPI block diagram:</h4><p><img src="/2022/03/22/220322-DMA-with-SPI-driver-FLASH-W25Q128/SPI_block_diagram.jpg" alt="SPI_block_diagram"></p>
 <h4 id="SPI-read-only-mode"><a href="#SPI-read-only-mode" class="headerlink" title="SPI read only mode:"></a>SPI read only mode:</h4><p>when the SPI master device want to read data form SPI Slave, we have to send the 0xFF byte to synchronous the receive data, it will occupying the master processor resource. we can she the <strong>SPI_CR2 register&#96;s SPE bit</strong> to set the SPI to only read mode, it will activate the SCK clock and receive data serially. we just only need to receive data and we do not need to send the 0xFF byte to synchronous.</p>
 <p><img src="/2022/03/22/220322-DMA-with-SPI-driver-FLASH-W25Q128/SPI_read_only.jpg" alt="SPI_read_only"></p>
