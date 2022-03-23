@@ -162,7 +162,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="REVIEW-AND-SUMMARY"><a href="#REVIEW-AND-SUMMARY" class="headerlink" title="REVIEW AND SUMMARY:"></a>REVIEW AND SUMMARY:</h2><p>W25Q128 just need to look at the instructions in document in detail. so I review the SPI and DMA in detail</p>
-<h3 id="SPI-review"><a href="#SPI-review" class="headerlink" title="SPI review:"></a>SPI review:</h3><h4 id="SPI-data-transmit-block-diagram"><a href="#SPI-data-transmit-block-diagram" class="headerlink" title="SPI data transmit block diagram:"></a>SPI data transmit block diagram:</h4><p><img src="/SPI_data_stream_transmit_block.jpg" alt="SPI_data_stream_transmit_block"></p>
+<h3 id="SPI-review"><a href="#SPI-review" class="headerlink" title="SPI review:"></a>SPI review:</h3><h4 id="SPI-data-transmit-block-diagram"><a href="#SPI-data-transmit-block-diagram" class="headerlink" title="SPI data transmit block diagram:"></a>SPI data transmit block diagram:</h4><p><img src="/2022/03/22/220322-DMA-with-SPI-driver-FLASH-W25Q128/SPI_data_stream_transmit_block.jpg" alt="SPI_data_stream_transmit_block"></p>
 <p>follow the above picture: SPI master and slave both have one <strong>shift register</strong>, in duplex mode, peripherals are write and read synchronous . if only write, the master ignore receive data. if only read master must send the NULL byte to synchronous the receive byte.</p>
 <h4 id="SPI-phase"><a href="#SPI-phase" class="headerlink" title="SPI phase:"></a>SPI phase:</h4><p><strong>SPI CR (control register)</strong> have two bit to control the SPI phase: <strong>CPOL</strong> and <strong>CPHA</strong></p>
 <ul>
@@ -170,15 +170,15 @@
 <li>CPHA control the SPI sampling timing. if CPHA &#x3D;&#x3D; 0, SPI sample  at falling edge. On the contrary, CPHA &#x3D;&#x3D; 1, SPI sample at the rising edge.</li>
 </ul>
 <p>![](SPI sequential.jpg)</p>
-<h4 id="SPI-block-diagram"><a href="#SPI-block-diagram" class="headerlink" title="SPI block diagram:"></a>SPI block diagram:</h4><p><img src="/SPI_block_diagram.jpg" alt="SPI_block_diagram"></p>
+<h4 id="SPI-block-diagram"><a href="#SPI-block-diagram" class="headerlink" title="SPI block diagram:"></a>SPI block diagram:</h4><p><img src="/2022/03/22/220322-DMA-with-SPI-driver-FLASH-W25Q128/SPI_block_diagram.jpg" alt="SPI_block_diagram"></p>
 <h4 id="SPI-read-only-mode"><a href="#SPI-read-only-mode" class="headerlink" title="SPI read only mode:"></a>SPI read only mode:</h4><p>when the SPI master device want to read data form SPI Slave, we have to send the 0xFF byte to synchronous the receive data, it will occupying the master processor resource. we can she the <strong>SPI_CR2 register&#96;s SPE bit</strong> to set the SPI to only read mode, it will activate the SCK clock and receive data serially. we just only need to receive data and we do not need to send the 0xFF byte to synchronous.</p>
-<p><img src="/SPI_read_only.jpg" alt="SPI_read_only"></p>
+<p><img src="/2022/03/22/220322-DMA-with-SPI-driver-FLASH-W25Q128/SPI_read_only.jpg" alt="SPI_read_only"></p>
 <h4 id="SPI-DMA-mode"><a href="#SPI-DMA-mode" class="headerlink" title="SPI DMA mode:"></a>SPI DMA mode:</h4><p>when we use SPI send&#x2F;receive bulk data, it will occupy a lot of CPU resources. we can enable the SPI DMA request bit to use DMA to control SPI.</p>
 <ul>
 <li>In the process of sending, each time when the SPI TXE change to 1 by the hardware, it will send the write request to the DMA and DMA will execute write option.</li>
 <li>In the process of reading, each time when the SPI RXNE change to 1 by the hardware, it will send the write request to the DMA and DMA will execute read option.</li>
 </ul>
-<h3 id="DMA-review"><a href="#DMA-review" class="headerlink" title="DMA review:"></a>DMA review:</h3><h4 id="DMA-block-diagram"><a href="#DMA-block-diagram" class="headerlink" title="DMA block diagram:"></a>DMA block diagram:</h4><p><img src="/DMA_block_diagram.jpg" alt="DMA_block_diagram"></p>
+<h3 id="DMA-review"><a href="#DMA-review" class="headerlink" title="DMA review:"></a>DMA review:</h3><h4 id="DMA-block-diagram"><a href="#DMA-block-diagram" class="headerlink" title="DMA block diagram:"></a>DMA block diagram:</h4><p><img src="/2022/03/22/220322-DMA-with-SPI-driver-FLASH-W25Q128/DMA_block_diagram.jpg" alt="DMA_block_diagram"></p>
 <ul>
 <li>in stm32f407, DMA1 have two AHB bus interface to connect memory and peripherals.(上图的存储器接口和外设接口). Usually, the peripherals interface connect to the APB bus so we change use like SPI, IIC, UART protocol to control the peripherals.</li>
 <li>DMA has FIFO mode and direct mode:<ul>
