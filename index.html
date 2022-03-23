@@ -141,6 +141,124 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-220322-DMA-with-SPI-driver-FLASH-W25Q128" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/03/22/220322-DMA-with-SPI-driver-FLASH-W25Q128/">DMA with SPI driver FLASH(W25Q128)</a>
+    </h1>
+  
+
+        
+        <a href="/2022/03/22/220322-DMA-with-SPI-driver-FLASH-W25Q128/" class="archive-article-date">
+  	<time datetime="2022-03-22T13:57:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="REVIEW-AND-SUMMARY"><a href="#REVIEW-AND-SUMMARY" class="headerlink" title="REVIEW AND SUMMARY:"></a>REVIEW AND SUMMARY:</h2><p>W25Q128 just need to look at the instructions in document in detail. so I review the SPI and DMA in detail</p>
+<h3 id="SPI-review"><a href="#SPI-review" class="headerlink" title="SPI review:"></a>SPI review:</h3><h4 id="SPI-data-transmit-block-diagram"><a href="#SPI-data-transmit-block-diagram" class="headerlink" title="SPI data transmit block diagram:"></a>SPI data transmit block diagram:</h4><p><img src="/SPI_data_stream_transmit_block.jpg" alt="SPI_data_stream_transmit_block"></p>
+<p>follow the above picture: SPI master and slave both have one <strong>shift register</strong>, in duplex mode, peripherals are write and read synchronous . if only write, the master ignore receive data. if only read master must send the NULL byte to synchronous the receive byte.</p>
+<h4 id="SPI-phase"><a href="#SPI-phase" class="headerlink" title="SPI phase:"></a>SPI phase:</h4><p><strong>SPI CR (control register)</strong> have two bit to control the SPI phase: <strong>CPOL</strong> and <strong>CPHA</strong></p>
+<ul>
+<li>CPOL control the SPI clock free level, if CPOL &#x3D;&#x3D; 0,SPI clock free level is low level. On the contrary, CPOL &#x3D;&#x3D; 1, SPI clock free level is high level.</li>
+<li>CPHA control the SPI sampling timing. if CPHA &#x3D;&#x3D; 0, SPI sample  at falling edge. On the contrary, CPHA &#x3D;&#x3D; 1, SPI sample at the rising edge.</li>
+</ul>
+<p>![](SPI sequential.jpg)</p>
+<h4 id="SPI-block-diagram"><a href="#SPI-block-diagram" class="headerlink" title="SPI block diagram:"></a>SPI block diagram:</h4><p><img src="/SPI_block_diagram.jpg" alt="SPI_block_diagram"></p>
+<h4 id="SPI-read-only-mode"><a href="#SPI-read-only-mode" class="headerlink" title="SPI read only mode:"></a>SPI read only mode:</h4><p>when the SPI master device want to read data form SPI Slave, we have to send the 0xFF byte to synchronous the receive data, it will occupying the master processor resource. we can she the <strong>SPI_CR2 register&#96;s SPE bit</strong> to set the SPI to only read mode, it will activate the SCK clock and receive data serially. we just only need to receive data and we do not need to send the 0xFF byte to synchronous.</p>
+<p><img src="/SPI_read_only.jpg" alt="SPI_read_only"></p>
+<h4 id="SPI-DMA-mode"><a href="#SPI-DMA-mode" class="headerlink" title="SPI DMA mode:"></a>SPI DMA mode:</h4><p>when we use SPI send&#x2F;receive bulk data, it will occupy a lot of CPU resources. we can enable the SPI DMA request bit to use DMA to control SPI.</p>
+<ul>
+<li>In the process of sending, each time when the SPI TXE change to 1 by the hardware, it will send the write request to the DMA and DMA will execute write option.</li>
+<li>In the process of reading, each time when the SPI RXNE change to 1 by the hardware, it will send the write request to the DMA and DMA will execute read option.</li>
+</ul>
+<h3 id="DMA-review"><a href="#DMA-review" class="headerlink" title="DMA review:"></a>DMA review:</h3><h4 id="DMA-block-diagram"><a href="#DMA-block-diagram" class="headerlink" title="DMA block diagram:"></a>DMA block diagram:</h4><p><img src="/DMA_block_diagram.jpg" alt="DMA_block_diagram"></p>
+<ul>
+<li>in stm32f407, DMA1 have two AHB bus interface to connect memory and peripherals.(上图的存储器接口和外设接口). Usually, the peripherals interface connect to the APB bus so we change use like SPI, IIC, UART protocol to control the peripherals.</li>
+<li>DMA has FIFO mode and direct mode:<ul>
+<li>FIFO mode: we should specify the FIFO threshold value like 1&#x2F;4, 2&#x2F;4, 3&#x2F;4, full FIFO<ul>
+<li>peripherals to memory: every time when peripherals request start-up, peripherals will send data to the FIFO. when the FIFO threshold reach, FIFO will send the data of the FIFO to the memory.</li>
+<li>memory to peripherals: when the time enable the memory to peripherals used FIFO, memory will send data to FIFO until the FIFO full, each time the peripherals request come, the FIFO will remove the data to the target peripherals</li>
+</ul>
+</li>
+<li>direct mode: <ul>
+<li>peripherals to memory: each time finish the data transmit form peripherals, the data will removed form FIFO to the memory.</li>
+<li>memory to peripherals: in this mode, we should specify the MSIZE, when the time enable the memory to peripherals directly, memory will send data to FIFO until reach the MSIZE. after the peripherals request data, the FIFO will be overload again.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">STM32</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/test-note//" class="article-tag-list-link color5">test note</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/03/22/220322-DMA-with-SPI-driver-FLASH-W25Q128/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-220315-xr872-environment-configuration-note" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
